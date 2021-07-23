@@ -17,8 +17,8 @@ const FormContainer: React.FC<Props> = ({
   current,
 }) => {
   return (
-    <section className="flex items-center justify-center w-full h-screen border  ">
-      <div className="w-4/12 mx-auto">
+    <section className="flex items-center justify-center w-full min-h-screen py-6 border ">
+      <div className="w-full mx-auto lg:w-4/12">
         <p className="text-2xl font-semibold text-center text-base2">
           {heading}
         </p>

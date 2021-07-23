@@ -1,53 +1,73 @@
-import React from "react";
-import { Bar } from "react-chartjs-2";
-import CheckBox from "../common/CheckBox";
+import React, { FC } from "react";
+import {
+  BarChart,
+  Bar,
+  Cell,
+  XAxis,
+  YAxis,
+  CartesianGrid,
+  Tooltip,
+  Legend,
+  ResponsiveContainer,
+} from "recharts";
+import { formatUserData, isEmpty } from "../helpers";
 
-const data = {
-  labels: ["Red", "Blue", "Yellow", "Green", "Purple", "Orange"],
-  datasets: [
-    {
-      label: "# of Votes",
-      data: [12, 19, 3, 5, 2, 3],
-      backgroundColor: [
-        "rgba(255, 99, 132, 0.2)",
-        "rgba(54, 162, 235, 0.2)",
-        "rgba(255, 206, 86, 0.2)",
-        "rgba(75, 192, 192, 0.2)",
-        "rgba(153, 102, 255, 0.2)",
-        "rgba(255, 159, 64, 0.2)",
-      ],
-      borderColor: [
-        "rgba(255, 99, 132, 1)",
-        "rgba(54, 162, 235, 1)",
-        "rgba(255, 206, 86, 1)",
-        "rgba(75, 192, 192, 1)",
-        "rgba(153, 102, 255, 1)",
-        "rgba(255, 159, 64, 1)",
-      ],
-      borderWidth: 1,
-    },
-  ],
+type Props = {
+  data: any;
+  setStartDate: (arg: string) => void;
+  setEndDate: (arg: string) => void;
 };
 
-const options = {
-  scales: {
-    yAxes: [
-      {
-        ticks: {
-          beginAtZero: true,
-        },
-      },
-    ],
-  },
-};
+const VerticalBar: FC<Props> = ({ data, setStartDate, setEndDate }) => {
+  const displayData = formatUserData(
+    !isEmpty(data) ? data.Book : [],
+    !isEmpty(data) ? data.Fiction : [],
+    "Book",
+    "Fiction"
+  );
 
-const VerticalBar = () => (
-  <>
-    <div className="header">
-      <CheckBox />
+  const reset = () => {
+    setStartDate("");
+    setEndDate("");
+  };
+
+  return (
+    <div>
+      {isEmpty(data) && (
+        <div className="flex items-center justify-center mt-6">
+          No data withing to chosen time frame{" "}
+          <span
+            onClick={() => reset()}
+            className="mx-2 text-sm font-bold text-blue-800 cursor-pointer"
+          >
+            Reset?
+          </span>
+        </div>
+      )}
+      {!isEmpty(data) && (
+        <ResponsiveContainer minHeight={360}>
+          <BarChart
+            data={displayData}
+            margin={{
+              top: 5,
+              right: 30,
+              left: 20,
+              bottom: 5,
+            }}
+          >
+            <XAxis dataKey="categoryName" />
+            <YAxis />
+            <CartesianGrid strokeDasharray="3 3" />
+            <Tooltip />
+            <Legend />
+            <Bar dataKey="bookLength" fill="#8884d8" />
+            <Bar dataKey="fictionLength" fill="#82ca9d" />
+            {/* <Bar dataKey="edition" fill="#f0ac59" /> */}
+          </BarChart>
+        </ResponsiveContainer>
+      )}
     </div>
-    <Bar type="string" data={data} options={options} />
-  </>
-);
+  );
+};
 
 export default VerticalBar;
