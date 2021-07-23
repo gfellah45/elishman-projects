@@ -76,9 +76,8 @@ const SingIn: React.FC<Props> = ({ change }) => {
         setData("basic", security);
         setData("profile", profile);
         notify("Successfully Login, Redirecting you to Dashboard", "success");
-        setTimeout(() => {
-          router.push("/dashboard");
-        }, 3000);
+
+        router.push("/dashboard");
       }
     } catch (e) {
       console.log(e.response);

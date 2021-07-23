@@ -4,19 +4,26 @@ import Charts from "./Charts";
 import Link from "next/link";
 import { getData } from "./helpers";
 import { useWindowSize } from "../hooks/useWindowSize";
-
+import { useRouter } from "next/router";
 const Display: React.FC = () => {
   const [state, setState] = useState("key");
 
   const size = useWindowSize();
+  const router = useRouter();
+  const logOut = () => {
+    router.push("/");
+    localStorage.clear();
+  };
 
-  console.log(size);
   return (
     <>
       {size.width < 1000 && (
         <div className="relative flex items-center justify-center h-screen px-6 text-lg font-semibold">
-          <div className="absolute font-bold text-blue-900 right-8 top-6">
-            <Link href="/">Log out</Link>
+          <div
+            onClick={() => logOut()}
+            className="absolute font-bold text-blue-900 cursor-pointer right-8 top-6"
+          >
+            Log out
           </div>
           For better viweing experience pls switch to desktop mode or device
           width above 1000px
@@ -54,8 +61,11 @@ const Display: React.FC = () => {
                 <div className="absolute font-bold text-blue-900 left-8 top-6">
                   {getData("profile").email}
                 </div>{" "}
-                <div className="absolute font-bold text-blue-900 right-8 top-6">
-                  <Link href="/">Log out</Link>
+                <div
+                  onClick={() => logOut()}
+                  className="absolute font-bold text-blue-900 cursor-pointer right-8 top-6"
+                >
+                  Log out
                 </div>{" "}
               </div>
             )}
