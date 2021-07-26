@@ -8,10 +8,10 @@ export default function Home() {
       <Head>
         {" "}
         <title>Report Generator</title>
-        <meta
-          http-equiv="Content-Security-Policy"
+        {/* <meta
+          httpEquiv="Content-Security-Policy"
           content="upgrade-insecure-requests"
-        />
+        /> */}
       </Head>
       <Login />
     </>

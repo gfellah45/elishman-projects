@@ -19,7 +19,8 @@
     "**/*.ts",
     "**/*.tsx",
     "pages/dashboard.tsx",
-    "components/common/CheckBox.js"
+    "components/common/CheckBox.js",
+    "pages/api/[...all].ts"
   ],
   "exclude": ["node_modules"]
 }

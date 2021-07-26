@@ -1,10 +1,12 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Generate from "./Generate";
 import Charts from "./Charts";
 import Link from "next/link";
-import { getData } from "./helpers";
+import { getData, setData } from "./helpers";
 import { useWindowSize } from "../hooks/useWindowSize";
 import { useRouter } from "next/router";
+import axios from "axios";
+import AxiosInstance from "../services";
 const Display: React.FC = () => {
   const [state, setState] = useState("key");
 
@@ -14,6 +16,26 @@ const Display: React.FC = () => {
     router.push("/");
     localStorage.clear();
   };
+
+  console.log(getData("userinfo"), "hello is ther anything i want you to");
+
+  const userInfo = async () => {
+    try {
+      const resp = await AxiosInstance.get(
+        `${process.env.NEXT_PUBLIC_BASE_URL}/account/user-info`
+      );
+      console.log(resp.data);
+      setData("userinfo", resp.data.data?.institution);
+    } catch (e) {
+      console.log(e);
+    }
+  };
+
+  useEffect(() => {
+    if (!getData("userinfo")) {
+      userInfo();
+    }
+  }, []);
 
   return (
     <>
@@ -59,7 +81,7 @@ const Display: React.FC = () => {
               <div className="z-30 w-full bg-white">
                 {" "}
                 <div className="absolute font-bold text-blue-900 left-8 top-6">
-                  {getData("profile").email}
+                  {getData("userinfo")}
                 </div>{" "}
                 <div
                   onClick={() => logOut()}

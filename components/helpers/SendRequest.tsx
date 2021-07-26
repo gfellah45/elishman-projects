@@ -20,7 +20,7 @@ export const fetchData = async (
       headers: {
         Accept: "application/json",
         "Content-Type": "application/json",
-        Authorization: "Basic " + getData("basic")?.secreteKey,
+        Authorization: "Basic " + getData("basic"),
       },
     }
   );
@@ -42,7 +42,7 @@ export const fetchSingleData = async (
       headers: {
         Accept: "application/json",
         "Content-Type": "application/json",
-        Authorization: "Basic " + getData("basic")?.secreteKey,
+        Authorization: "Basic " + getData("basic"),
       },
     }
   );

@@ -5,13 +5,13 @@ if (typeof window !== "undefined") {
   data = new SecureLS();
 }
 
-export const setData = (id: string, storage: object) => {
-  data.set(id, JSON.stringify(storage));
+export const setData = (id: string, storage: string) => {
+  data.set(id, storage);
 };
 
 export const getData = (id: string) => {
   if (typeof window !== "undefined") {
-    return JSON.parse(data.get(id));
+    return data.get(id);
   }
 };
 

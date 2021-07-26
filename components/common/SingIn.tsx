@@ -55,7 +55,7 @@ const SingIn: React.FC<Props> = ({ change }) => {
   const login: SubmitHandler<FormValues> = async (values) => {
     const { email, password } = values;
 
-    const url = `${process.env.NEXT_PUBLIC_BASE_URL}/auth/login?password=${password}&username=${email}`;
+    const url = `http://157.245.16.161/auth/login?password=${password}&username=${email}`;
 
     // try and catch block
 
@@ -68,13 +68,10 @@ const SingIn: React.FC<Props> = ({ change }) => {
       // const basic = `Basic ${security.secreteKey}`;
 
       if (resp.status === 200) {
-        const newToken = {
-          accessToken: resp.headers.accesstoken,
-          expiresAt: resp.headers.expiresat,
-        };
-        setData("token", newToken);
-        setData("basic", security);
-        setData("profile", profile);
+        const token = resp.headers.accesstoken;
+
+        setData("token", token);
+        setData("basic", security.secreteKey);
         notify("Successfully Login, Redirecting you to Dashboard", "success");
 
         router.push("/dashboard");

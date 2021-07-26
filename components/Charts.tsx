@@ -33,9 +33,6 @@ const Charts: React.FC<Props> = ({ show }) => {
   const [use2, setUse2] = useState<RequestProps>();
   const [borrow2, setBorrow2] = useState<RequestProps>();
 
-  console.log(use2);
-  console.log(borrow2);
-
   useEffect(() => {
     fetchData(checked, dayUse, hourUse, "patron-use-material", setUse);
     fetchData(
@@ -84,7 +81,7 @@ const Charts: React.FC<Props> = ({ show }) => {
               type="hours"
             />
           )}
-          <div>use</div>
+
           <LineCharts data={formartData(use)} />
         </div>
         <div>
@@ -109,7 +106,7 @@ const Charts: React.FC<Props> = ({ show }) => {
               type="hours"
             />
           )}
-          <div>browse</div>
+
           <LineCharts data={formartData(borrow)} />
         </div>
         <div>

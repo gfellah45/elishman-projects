@@ -1,66 +1,29 @@
-import React, { useEffect, useState } from "react";
+import React, { useState, useRef } from "react";
 import axios from "axios";
 import { useClipboard } from "use-clipboard-copy";
 import { getData, getExpirationDate, isExpired, setData } from "./helpers";
+import AxiosInstance from "../services";
 interface Props {
   state: string;
 }
 
 const Generate: React.FC<Props> = ({ state }) => {
-  const clipboard = useClipboard();
+  const [copySuccess, setCopySuccess] = useState("");
+  const textAreaRef = useRef(null);
 
-  const key: string = getData("basic")?.secreteKey || "";
+  function copyToClipboard(e) {
+    textAreaRef.current.select();
+    document.execCommand("copy");
+    // This is just personal preference.
+    // I prefer to not show the whole text area selected.
+    e.target.focus();
+    setCopySuccess("Copied!");
+  }
 
-  console.log("key", key);
-
-  const genarateNewToken = async (_token) => {
-    if (!_token) {
-      return null;
-    }
-
-    if (isExpired(getExpirationDate(_token.expiresAt))) {
-      const updatedToken = await axios.get(
-        `${process.env.NEXT_PUBLIC_BASE_URL}/auth/refresh-token`,
-        {
-          headers: {
-            "Refresh-Token": _token.accessToken,
-          },
-        }
-      );
-
-      setData("token", updatedToken.data);
-      console.log(getData("token"), "@@@new token");
-      return updatedToken.status;
-    }
-
-    return _token && _token.accessToken;
-  };
-
-  const regenerate = async (token: number) => {
-    try {
-      if (token === 200 || token) {
-        const resp = await axios.put(
-          `${process.env.NEXT_PUBLIC_BASE_URL}/account/keys/regenerate`,
-          {
-            headers: {
-              Authorization: `Bearer ${getData("token").accessToken}`,
-            },
-          }
-        );
-
-        console.log(resp);
-      }
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
-  const generate = async () => {
-    const token = await genarateNewToken(getData("token"));
-
-    setTimeout(() => {
-      regenerate(token);
-    }, 1000);
+  const generate = () => {
+    AxiosInstance.put(
+      `${process.env.NEXT_PUBLIC_BASE_URL}/account/keys/regenerate`
+    );
   };
   return (
     <div
@@ -74,8 +37,8 @@ const Generate: React.FC<Props> = ({ state }) => {
         <div className="w-7/12">
           <input
             type="text"
-            ref={clipboard.target}
-            value={key}
+            ref={textAreaRef}
+            value={getData("basic")}
             readOnly
             className="w-full h-12 px-2 text-gray-600 placeholder-gray-500 border rounded-lg focus-within:outline-none focus:outline-none"
           />
@@ -90,7 +53,7 @@ const Generate: React.FC<Props> = ({ state }) => {
         </div>
       </div>
       <div className="flex w-5/12 px-10 text-gray-600 my-9 text-md">
-        <button onClick={() => clipboard.copy}>
+        <button onClick={copyToClipboard}>
           <img
             src="/Group.svg"
             alt="copy"
@@ -103,7 +66,7 @@ const Generate: React.FC<Props> = ({ state }) => {
           Click to copy the generated key for use on another platform
         </p>
 
-        <p className="text-sm text-red-600">{clipboard.copied && "Copied"}</p>
+        <p className="text-sm text-red-600">{copySuccess}</p>
       </div>
     </div>
   );
