@@ -5,7 +5,7 @@ import PieCharts from "./common/PieCharts";
 import LineCharts from "./common/LineCharts";
 import CheckBox from "./common/CheckBox";
 import FilterDates from "./common/FilterDates";
-import { formartData, pulledData } from "./helpers";
+import { formartData, pulledData, computetime } from "./helpers";
 import { fetchData, fetchSingleData } from "./helpers/SendRequest";
 
 interface Props {
@@ -82,7 +82,9 @@ const Charts: React.FC<Props> = ({ show }) => {
             />
           )}
 
-          <LineCharts data={formartData(use)} />
+          <LineCharts
+            data={checked === "days" ? formartData(use) : computetime(use)}
+          />
         </div>
         <div>
           {/* borrow */}
@@ -107,7 +109,11 @@ const Charts: React.FC<Props> = ({ show }) => {
             />
           )}
 
-          <LineCharts data={formartData(borrow)} />
+          <LineCharts
+            data={
+              checked2 === "days" ? formartData(borrow) : computetime(borrow)
+            }
+          />
         </div>
         <div>
           {/* use */}

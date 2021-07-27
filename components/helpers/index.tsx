@@ -107,3 +107,12 @@ export function isEmpty(value: object | string | number | Array<any>) {
     (typeof value === "string" && value.trim().length === 0)
   );
 }
+
+export const computetime = (use) => {
+  return use.map((item) => {
+    return {
+      period: item.period.split("T")[1].split(".")[0],
+      count: item.count,
+    };
+  });
+};
