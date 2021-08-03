@@ -6,7 +6,12 @@ import LineCharts from "./common/LineCharts";
 import CheckBox from "./common/CheckBox";
 import FilterDates from "./common/FilterDates";
 import { formartData, pulledData, computetime } from "./helpers";
-import { fetchData, fetchSingleData } from "./helpers/SendRequest";
+import {
+  fetchData,
+  fetchSingleData,
+  fetchTableData,
+} from "./helpers/SendRequest";
+import Table from "./common/Table";
 
 interface Props {
   show: string;
@@ -32,6 +37,8 @@ const Charts: React.FC<Props> = ({ show }) => {
   const [endDate2, setEndDate2] = useState<string>("");
   const [use2, setUse2] = useState<RequestProps>();
   const [borrow2, setBorrow2] = useState<RequestProps>();
+  const [material, setMaterial] = useState();
+  const [patron, setPatron] = useState();
 
   useEffect(() => {
     fetchData(checked, dayUse, hourUse, "patron-use-material", setUse);
@@ -48,6 +55,17 @@ const Charts: React.FC<Props> = ({ show }) => {
     fetchSingleData(startDate, endDate, setUse2, "patron-use-material");
     fetchSingleData(startDate2, endDate2, setBorrow2, "patron-borrow-material");
   }, [startDate, endDate, startDate2, endDate2]);
+
+  const patronAndMeterialData = async () => {
+    const material = await fetchTableData("material");
+    const patron = await fetchTableData("patron");
+    setMaterial(material);
+    setPatron(patron);
+  };
+
+  useEffect(() => {
+    patronAndMeterialData();
+  }, []);
 
   return (
     <div
@@ -148,6 +166,13 @@ const Charts: React.FC<Props> = ({ show }) => {
             setStartDate={setStartDate2}
             setEndDate={setEndDate2}
           />
+        </div>
+
+        <div>
+          <Table data={material} />
+        </div>
+        <div>
+          <Table data={patron} />
         </div>
       </div>
     </div>

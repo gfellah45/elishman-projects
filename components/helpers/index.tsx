@@ -81,9 +81,6 @@ export const formatUserData = (
     let obj1 = {
       author: obj.author,
       categoryName: obj.categoryName,
-      discipline: obj.discipline,
-      documentNumber: obj.documentNumber,
-      edition: obj.edition,
     };
 
     if (obj1.categoryName === arg1) {
@@ -97,6 +94,24 @@ export const formatUserData = (
   }, []);
 
   return combine;
+};
+
+export const newFormatedData = (data: {}[]) => {
+  const keys = Object.keys(data);
+  const obj = [];
+  if (data) {
+    for (let i: number = 0; i < Object.keys(data).length; i++) {
+      if (keys[i] === Object.keys(data)[i]) {
+        data[keys[i]].forEach((item: object) => {
+          obj.push({
+            number: data[keys[i]].length,
+            ...item,
+          });
+        });
+      }
+    }
+  }
+  return obj;
 };
 
 export function isEmpty(value: object | string | number | Array<any>) {

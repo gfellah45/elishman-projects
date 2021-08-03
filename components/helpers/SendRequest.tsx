@@ -49,3 +49,18 @@ export const fetchSingleData = async (
 
   modifier(resp.data.data);
 };
+
+export const fetchTableData = async (url: string) => {
+  const resp = await axios.get(
+    `${process.env.NEXT_PUBLIC_BASE_URL}/api/${url}`,
+    {
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+        Authorization: "Basic " + getData("basic"),
+      },
+    }
+  );
+
+  return resp.data.data;
+};
