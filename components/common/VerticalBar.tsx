@@ -19,48 +19,12 @@ type Props = {
 };
 
 const VerticalBar: FC<Props> = ({ data, setStartDate, setEndDate }) => {
-  // console.log(data);
-
-  // const [newArr, setNewArr] = useState<{}[]>();
-
-  // console.log(Object.keys(!isEmpty(data) && data));
-
-  // useEffect(() => {
-  //   const keys = Object.keys(!isEmpty(data) && data);
-  //   const obj = [];
-  //   if (!isEmpty(data)) {
-  //     for (let i: number = 0; i < Object.keys(data).length; i++) {
-  //       if (keys[i] === Object.keys(data)[i]) {
-  //         data[keys[i]].forEach((item: object) => {
-  //           obj.push({
-  //             number: data[keys[i]].length,
-  //             ...item,
-  //           });
-  //         });
-  //       }
-  //     }
-  //   }
-  //   setNewArr(obj);
-  // }, [data]);
-
-  // newFormatedData(!isEmpty(data) && data);
-
-  // console.log(newFormatedData(!isEmpty(data) && data), "final blow FORMATTED");
-
-  // const displayData = formatUserData(
-  //   !isEmpty(data) ? data.Book : [],
-  //   !isEmpty(data) ? data.Refrence : [],
-  //   "Book",
-  //   "Refrence"
-  // );
-
   const reset = () => {
     setStartDate("");
     setEndDate("");
   };
 
   return (
-    // <p>testing</p>
     <div>
       {isEmpty(data) && (
         <div className="flex items-center justify-center mt-6">
@@ -90,7 +54,7 @@ const VerticalBar: FC<Props> = ({ data, setStartDate, setEndDate }) => {
             <Tooltip />
             <Legend />
             <Bar dataKey="number" fill="#8884d8" />
-            {/* <Bar dataKey="fictionLength" fill="#82ca9d" /> */}
+            <Bar dataKey="categoryName" fill="#82ca9d" />
             {/* <Bar dataKey="edition" fill="#f0ac59" /> */}
           </BarChart>
         </ResponsiveContainer>

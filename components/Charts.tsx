@@ -5,7 +5,7 @@ import PieCharts from "./common/PieCharts";
 import LineCharts from "./common/LineCharts";
 import CheckBox from "./common/CheckBox";
 import FilterDates from "./common/FilterDates";
-import { formartData, pulledData, computetime } from "./helpers";
+import { formartData, pulledData, computetime, isEmpty } from "./helpers";
 import {
   fetchData,
   fetchSingleData,
@@ -169,10 +169,10 @@ const Charts: React.FC<Props> = ({ show }) => {
         </div>
 
         <div>
-          <Table data={material} />
+          <Table type="material" data={!isEmpty(material) ? material : []} />
         </div>
         <div>
-          <Table data={patron} />
+          <Table type="patron" data={!isEmpty(patron) ? patron : []} />
         </div>
       </div>
     </div>

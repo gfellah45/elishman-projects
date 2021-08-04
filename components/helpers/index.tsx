@@ -124,10 +124,16 @@ export function isEmpty(value: object | string | number | Array<any>) {
 }
 
 export const computetime = (use) => {
-  return use.map((item) => {
-    return {
-      period: item.period.split("T")[1].split(".")[0],
-      count: item.count,
-    };
-  });
+  console.log(use);
+  return use
+    .map((item) => {
+      return {
+        period: new Date(item.period).toLocaleTimeString(),
+        count: item.count,
+      };
+    })
+    .sort((a, b) => b.period - a.period)
+    .reverse();
 };
+
+// item.period.split("T")[1].split(".")[0],

@@ -9,6 +9,8 @@ type data = {
   setEndDate: (arg: string) => void;
 };
 
+const COLORS = ["#0088FE", "#00C49F", "#FFBB28", "#FF8042"];
+
 const PieCharts: FC<data> = ({ data, setStartDate, setEndDate }) => {
   // console.log(data);
   // const displayData = formatUserData(
@@ -60,7 +62,6 @@ const PieCharts: FC<data> = ({ data, setStartDate, setEndDate }) => {
               label
             />
             <Tooltip />
-            <Legend />
           </PieChart>
         </ResponsiveContainer>
       )}
