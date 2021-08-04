@@ -124,7 +124,6 @@ export function isEmpty(value: object | string | number | Array<any>) {
 }
 
 export const computetime = (use) => {
-  console.log(use);
   return use
     .map((item) => {
       return {
