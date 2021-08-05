@@ -59,8 +59,8 @@ export const formartData = (data: pulledData) => {
   return data
     .sort(
       (a: any, b: any) =>
-        Number(new Date(a.period).getDate()) -
-        Number(new Date(b.period).getDate())
+        Number(new Date(b.period).getDate()) -
+        Number(new Date(a.period).getDate())
     )
     .reduce((acc: pulledData, itr: itrator) => {
       const obj = {
@@ -68,7 +68,8 @@ export const formartData = (data: pulledData) => {
         count: itr.count,
       };
       return acc.concat(obj);
-    }, []);
+    }, [])
+    .reverse();
 };
 
 export const formatUserData = (
@@ -96,22 +97,53 @@ export const formatUserData = (
   return combine;
 };
 
-export const newFormatedData = (data: {}[]) => {
+export const newFormatedData = (data: {}[], type: string) => {
   const keys = Object.keys(data);
   const obj = [];
+  const newKey: string[] = [];
+  const dataLength = {};
   if (data) {
     for (let i: number = 0; i < Object.keys(data).length; i++) {
       if (keys[i] === Object.keys(data)[i]) {
         data[keys[i]].forEach((item: object) => {
-          obj.push({
-            number: data[keys[i]].length,
-            ...item,
-          });
+          dataLength[keys[i]] = data[keys[i]].length;
+          obj.push(data[keys[i]].length);
         });
       }
     }
   }
-  return obj;
+
+  keys.forEach((item: string, idx) => {
+    if (item === Object.keys(data)[idx]) {
+      let repeatedDataset: string = `${item} `.repeat(dataLength[item]);
+      newKey.push(repeatedDataset);
+    }
+  });
+  const mainData = {
+    labels: newKey.toLocaleString().trim().split(" "),
+    datasets: [
+      {
+        label: `Number of Books ${type}`,
+        data: obj,
+        backgroundColor: [
+          "rgba(255, 99, 132, 0.2)",
+          "rgba(54, 162, 235, 0.2)",
+          "rgba(255, 206, 86, 0.2)",
+          "rgba(75, 192, 192, 0.2)",
+          "rgba(75, 192, 192, 0.2)",
+        ],
+        borderColor: [
+          "rgba(255, 99, 132, 1)",
+          "rgba(54, 162, 235, 1)",
+          "rgba(255, 206, 86, 1)",
+          "rgba(75, 192, 192, 1)",
+          "rgba(75, 192, 192, 1)",
+        ],
+        borderWidth: 1,
+      },
+    ],
+  };
+  return mainData;
 };
 
 export function isEmpty(value: object | string | number | Array<any>) {
@@ -133,6 +165,63 @@ export const computetime = (use) => {
     })
     .sort((a, b) => b.period - a.period)
     .reverse();
+};
+
+export const formatDays = (
+  arg: { count: number; period: string }[],
+  type: string
+) => {
+  let labels = [];
+  let data = [];
+
+  for (let i = 0; i < arg.length; i++) {
+    labels.push(currentDay(new Date(arg[i].period).getDay()));
+    data.push(arg[i].count);
+  }
+
+  let mainData = {
+    labels: labels.sort((a, b) => b - a).reverse(),
+    datasets: [
+      {
+        data,
+        label: `books ${type}`,
+        fill: false,
+        backgroundColor: "rgb(255, 99, 132)",
+        borderColor: "rgba(255, 99, 132, 0.2)",
+      },
+    ],
+  };
+
+  return mainData;
+};
+
+export const formatTime = (
+  arg: { count: number; period: string }[],
+  type: string
+) => {
+  let labels = [];
+  let data = [];
+
+  for (let i = 0; i < arg.length; i++) {
+    let time = new Date(arg[i].period).toLocaleTimeString();
+    labels.push(time);
+    data.push(arg[i].count);
+  }
+
+  let mainData = {
+    labels: labels.sort((a, b) => b - a).reverse(),
+    datasets: [
+      {
+        data,
+        label: `books ${type}`,
+        fill: false,
+        backgroundColor: "rgb(255, 99, 132)",
+        borderColor: "rgba(255, 99, 132, 0.2)",
+      },
+    ],
+  };
+
+  return mainData;
 };
 
 // item.period.split("T")[1].split(".")[0],

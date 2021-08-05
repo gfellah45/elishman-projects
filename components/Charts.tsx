@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from "react";
 import VerticalBar from "./common/VerticalBar";
 import Range from "./common/Range";
-import PieCharts from "./common/PieCharts";
+
 import LineCharts from "./common/LineCharts";
 import CheckBox from "./common/CheckBox";
 import FilterDates from "./common/FilterDates";
-import { formartData, pulledData, computetime, isEmpty } from "./helpers";
+import { pulledData, isEmpty, formatDays, formatTime } from "./helpers";
 import {
   fetchData,
   fetchSingleData,
@@ -101,7 +101,11 @@ const Charts: React.FC<Props> = ({ show }) => {
           )}
 
           <LineCharts
-            data={checked === "days" ? formartData(use) : computetime(use)}
+            data={
+              checked === "days"
+                ? formatDays(use, "Used")
+                : formatTime(use, "Used")
+            }
           />
         </div>
         <div>
@@ -129,7 +133,9 @@ const Charts: React.FC<Props> = ({ show }) => {
 
           <LineCharts
             data={
-              checked2 === "days" ? formartData(borrow) : computetime(borrow)
+              checked2 === "days"
+                ? formatDays(borrow, "Borrowed")
+                : formatTime(borrow, "Borrowed")
             }
           />
         </div>
@@ -147,12 +153,13 @@ const Charts: React.FC<Props> = ({ show }) => {
             data={use2}
             setStartDate={setStartDate}
             setEndDate={setEndDate}
+            type="Used"
           />
         </div>
-        <div className="flex flex-col flex-wrap items-center ">
+        <div>
           {/* borrow */}
           {/* /api/patron-borrow-material */}
-          <div className="mb-14 max-h-14">
+          <div>
             <FilterDates
               startDate={startDate2}
               endDate={endDate2}
@@ -161,10 +168,11 @@ const Charts: React.FC<Props> = ({ show }) => {
             />
           </div>
 
-          <PieCharts
+          <VerticalBar
             data={borrow2}
             setStartDate={setStartDate2}
             setEndDate={setEndDate2}
+            type="Borrowed"
           />
         </div>
 

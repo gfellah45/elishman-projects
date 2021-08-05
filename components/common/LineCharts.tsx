@@ -1,128 +1,40 @@
-import React from "react";
-import {
-  LineChart,
-  Line,
-  XAxis,
-  YAxis,
-  CartesianGrid,
-  Tooltip,
-  Legend,
-  ResponsiveContainer,
-} from "recharts";
+//
+import React, { FC } from "react";
+import { Line } from "react-chartjs-2";
 
-const data = [
-  {
-    name: "Page A",
-    uv: 4000,
-    pv: 2400,
-    amt: 2400,
-  },
-  {
-    name: "Page B",
-    uv: 3000,
-    pv: 1398,
-    amt: 2210,
-  },
-  {
-    name: "Page C",
-    uv: 2000,
-    pv: 9800,
-    amt: 2290,
-  },
-  {
-    name: "Page D",
-    uv: 2780,
-    pv: 3908,
-    amt: 2000,
-  },
-  {
-    name: "Page E",
-    uv: 1890,
-    pv: 4800,
-    amt: 2181,
-  },
-  {
-    name: "Page F",
-    uv: 2390,
-    pv: 3800,
-    amt: 2500,
-  },
-  {
-    name: "Page G",
-    uv: 3490,
-    pv: 4300,
-    amt: 2100,
-  },
-];
-
-const data2 = [
-  {
-    scale: 1,
-    count: 1,
-    period: "2021-07-19",
-    day: "Monday",
-  },
-  {
-    scale: 2,
-    count: 4,
-    period: "2021-07-18",
-    day: "Teusday",
-  },
-  {
-    count: 9,
-    period: "2021-07-17",
-  },
-  {
-    scale: 5,
-    count: 4,
-    period: "2021-07-16",
-    day: "Wednesday",
-  },
-  {
-    scale: 8,
-    count: 3,
-    period: "2021-07-15",
-    day: "Thursday",
-  },
-  {
-    scale: 10,
-    count: 1,
-    period: "2021-07-14",
-    day: "Friday",
-  },
-];
-
-type Props = {
-  data: any;
+const data = {
+  labels: ["1", "2", "3", "4", "5", "6"],
+  datasets: [
+    {
+      label: "# of Votes",
+      data: [12, 19, 3, 5, 2, 3],
+      fill: false,
+      backgroundColor: "rgb(255, 99, 132)",
+      borderColor: "rgba(255, 99, 132, 0.2)",
+    },
+  ],
 };
 
-const LineCharts: React.FC<Props> = ({ data }) => (
+const options = {
+  scales: {
+    yAxes: [
+      {
+        ticks: {
+          beginAtZero: true,
+        },
+      },
+    ],
+  },
+};
+
+interface LineProps {
+  data?: {};
+}
+
+const LineChart: FC<LineProps> = ({ data }) => (
   <>
-    <LineChart
-      width={500}
-      height={300}
-      data={data.length > 0 ? data : []}
-      margin={{
-        top: 5,
-        right: 30,
-        left: 20,
-        bottom: 5,
-      }}
-    >
-      <CartesianGrid strokeDasharray="3 3" />
-      <XAxis dataKey="period" />
-      <YAxis dataKey="count" />
-      <Tooltip />
-      <Legend />
-      <Line
-        type="monotone"
-        dataKey="count"
-        stroke="#8884d8"
-        activeDot={{ r: 8 }}
-      />
-      <Line type="monotone" dataKey="period" stroke="#82ca9d" />
-    </LineChart>
+    <Line type="line" data={data} options={options} />
   </>
 );
 
-export default LineCharts;
+export default React.memo(LineChart);
