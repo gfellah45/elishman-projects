@@ -4,10 +4,7 @@ import { AppProps } from "next/app";
 
 function ErrorFallback() {
   return (
-    <div
-      className="flex flex-col items-center justify-center w-screen h-screen text-red-500"
-      role="alert"
-    >
+    <div className="flex flex-col items-center justify-center w-screen h-screen text-red-500">
       <h2 className="text-lg font-semibold">Ooops, something went wrong :( </h2>
       <button
         className="mt-4"

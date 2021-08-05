@@ -123,7 +123,7 @@ export const newFormatedData = (data: {}[], type: string) => {
     labels: newKey.toLocaleString().trim().split(" "),
     datasets: [
       {
-        label: `Number of Books ${type}`,
+        label: `Number of Materials ${type}`,
         data: obj,
         backgroundColor: [
           "rgba(255, 99, 132, 0.2)",
@@ -155,18 +155,6 @@ export function isEmpty(value: object | string | number | Array<any>) {
   );
 }
 
-export const computetime = (use) => {
-  return use
-    .map((item) => {
-      return {
-        period: new Date(item.period).toLocaleTimeString(),
-        count: item.count,
-      };
-    })
-    .sort((a, b) => b.period - a.period)
-    .reverse();
-};
-
 export const formatDays = (
   arg: { count: number; period: string }[],
   type: string
@@ -183,8 +171,8 @@ export const formatDays = (
     labels: labels.sort((a, b) => b - a).reverse(),
     datasets: [
       {
-        data,
-        label: `books ${type}`,
+        data: data.reverse(),
+        label: `Materials ${type}`,
         fill: false,
         backgroundColor: "rgb(255, 99, 132)",
         borderColor: "rgba(255, 99, 132, 0.2)",
@@ -203,17 +191,19 @@ export const formatTime = (
   let data = [];
 
   for (let i = 0; i < arg.length; i++) {
-    let time = new Date(arg[i].period).toLocaleTimeString();
+    let start = arg[i].period.lastIndexOf("T");
+    let end = arg[i].period.lastIndexOf(".");
+    let time = arg[i].period.substring(start + 1, end);
     labels.push(time);
     data.push(arg[i].count);
   }
 
   let mainData = {
-    labels: labels.sort((a, b) => b - a).reverse(),
+    labels: labels.sort((a, b) => b - a),
     datasets: [
       {
-        data,
-        label: `books ${type}`,
+        data: data.sort((a, b) => b - a),
+        label: `Materials ${type}`,
         fill: false,
         backgroundColor: "rgb(255, 99, 132)",
         borderColor: "rgba(255, 99, 132, 0.2)",
