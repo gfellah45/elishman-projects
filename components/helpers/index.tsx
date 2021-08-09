@@ -199,7 +199,7 @@ export const formatTime = (
   }
 
   let mainData = {
-    labels: labels.sort((a, b) => b - a).reverse(),
+    labels: labels.sort((a, b) => b - a),
     datasets: [
       {
         data: data.sort((a, b) => b - a).reverse(),

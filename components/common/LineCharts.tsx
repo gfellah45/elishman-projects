@@ -7,6 +7,9 @@ const options = {
     yAxes: [
       {
         ticks: {
+          max: 10,
+          min: 0,
+          stepSize: 3,
           beginAtZero: true,
         },
       },
