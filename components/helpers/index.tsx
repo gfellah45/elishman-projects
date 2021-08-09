@@ -199,10 +199,10 @@ export const formatTime = (
   }
 
   let mainData = {
-    labels: labels.sort((a, b) => b - a),
+    labels: labels.sort((a, b) => b - a).reverse(),
     datasets: [
       {
-        data: data.sort((a, b) => b - a),
+        data: data.sort((a, b) => b - a).reverse(),
         label: `Materials ${type}`,
         fill: false,
         backgroundColor: "rgb(255, 99, 132)",
